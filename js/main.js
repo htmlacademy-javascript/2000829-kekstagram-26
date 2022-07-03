@@ -1,21 +1,21 @@
 /* eslint-disable no-console */
 function getRandomInt(min, max) {
-  if (min !== max && min >= 0 && 0 <= max && min < max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  if (min === max || min > max) {
+    return 'Неправильно введен диапазон';
   }
-  return 'Не правильно введен диапазон!';
+  if (min <= 0 || 0 >= max) {
+    return 'Допустимы только положительные числа';
+  }
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 getRandomInt(2, 12);
 
 
-function validLenght(line, maxLeght) {
-  if (line >= maxLeght) {
-    return false;
-  }
-  return true;
+function validLenght(line, maxLength) {
+  return line <= maxLength;
 }
 
-validLenght(10,140);
+validLenght(25,140);
