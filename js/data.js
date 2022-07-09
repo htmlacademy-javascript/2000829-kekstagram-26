@@ -10,7 +10,7 @@ const DESCRIPTIONS_PHOTOS =[
   'Веселье в разгаре'
 ];
 
-const MESSAGES_COMMET = [
+const MESSAGES_COMMENT = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -44,7 +44,7 @@ function createComment() {
   return {
     id: createUniqNumber(),
     avatar: `img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
-    message: getRandomArrayElement(MESSAGES_COMMET),
+    message: getRandomArrayElement(MESSAGES_COMMENT),
     name: getRandomArrayElement(USERS_NAMES),
   };
 }
@@ -57,7 +57,7 @@ function createPhotoDiscription() {
     url: `photos/${createUniqNumber()}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS_PHOTOS),
     likes: getRandomPositiveInteger(15, 200),
-    commets: allComments,
+    comments: allComments,
   };
 }
 
