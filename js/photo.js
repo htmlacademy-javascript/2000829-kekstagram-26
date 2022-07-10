@@ -1,5 +1,6 @@
 import {allPhotos} from './data.js';
 
+
 const allPicture = document.querySelector('.pictures');
 const photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const photos = allPhotos();
