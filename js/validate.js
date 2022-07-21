@@ -85,7 +85,9 @@ form.addEventListener ('submit', (evt) => {
 
   const isValid = pristine.validate();
   if (!isValid){
+    // eslint-disable-next-line no-console
     console.log('Форма не верна');
   }
+  // eslint-disable-next-line no-console
   console.log('Форма верна');
 });
