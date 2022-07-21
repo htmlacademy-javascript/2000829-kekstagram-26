@@ -46,7 +46,7 @@ const onBigPhotoEscKeydown = (evt) => {
 const openBigPhoto = (miniPhoto) => {
   body.classList.add('modal-open');
   bigPhoto.classList.remove('hidden');
-  //socialComCount.classList.add('hidden');
+  socialComCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
   const currentElement = photos.find((item) => item.id === Number(miniPhoto.dataset.id));
   bigPhotoImg.src = currentElement.url;

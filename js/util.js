@@ -15,9 +15,6 @@ function checkStringLength (string, length) {
 
 checkStringLength(25,140);
 
-// eslint-disable-next-line arrow-body-style
-const isEscapeKey = (evt) => {
-  return evt.key === 'Escape';
-};
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
 export {getRandomPositiveInteger, getRandomArrayElement, isEscapeKey, checkStringLength};

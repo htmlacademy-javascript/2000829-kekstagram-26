@@ -49,7 +49,9 @@ function createComment() {
   };
 }
 
-const allComments = Array.from({length: getRandomPositiveInteger(1, 4)}, createComment);
+function allComments() {
+  return Array.from({length: getRandomPositiveInteger(1, 4)}, createComment);
+}
 
 function createPhotoDiscription() {
   return {
@@ -57,7 +59,7 @@ function createPhotoDiscription() {
     url: `photos/${createUniqNumber()}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS_PHOTOS),
     likes: getRandomPositiveInteger(15, 200),
-    comments: allComments,
+    comments: allComments(),
   };
 }
 
