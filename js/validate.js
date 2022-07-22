@@ -14,20 +14,19 @@ const re = /^#[A-Za-zА-яа-яЁё0-9]{1,19}$/;
 const hideForm = () => {
   uploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onImgUploadEscKeydown);
 };
 
-const onImgUploadEscKeydown = (evt) => {
+function onImgUploadEscKeydown(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     hideForm();
-    document.removeEventListener('keydown', onImgUploadEscKeydown);
   }
-};
+}
 
-const closeImgUpload = () => {
+function closeImgUpload() {
   hideForm();
-  document.removeEventListener('keydown', onImgUploadEscKeydown);
-};
+}
 
 const openImgUpload = () => {
   uploadOverlay.classList.remove('hidden');
