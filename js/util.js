@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 function getRandomPositiveInteger (a, b) {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
@@ -16,4 +15,6 @@ function checkStringLength (string, length) {
 
 checkStringLength(25,140);
 
-export {getRandomPositiveInteger, getRandomArrayElement};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomPositiveInteger, getRandomArrayElement, isEscapeKey, checkStringLength};
