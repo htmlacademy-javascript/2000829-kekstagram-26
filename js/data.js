@@ -31,9 +31,9 @@ const USERS_NAMES = [
   'SayHi'
 ];
 
-const createUniqNumber = function() {
+const createUniqNumber = () => {
   let id = getRandomPositiveInteger(1, 25);
-  if (id === createComment.id || id === createPhotoDiscription.url) {
+  if (id === createComment.id) {
     id = getRandomPositiveInteger(1, 25);
     return id;
   }
@@ -49,22 +49,16 @@ function createComment() {
   };
 }
 
-function allComments() {
-  return Array.from({length: getRandomPositiveInteger(1, 4)}, createComment);
-}
+const allComments = () => Array.from({length: getRandomPositiveInteger(1, 4)}, createComment);
 
-function createPhotoDiscription() {
-  return {
-    id: createUniqNumber(),
-    url: `photos/${createUniqNumber()}.jpg`,
-    description: getRandomArrayElement(DESCRIPTIONS_PHOTOS),
-    likes: getRandomPositiveInteger(15, 200),
-    comments: allComments(),
-  };
-}
+const createPhotoDiscription = () => ({
+  id: createUniqNumber(),
+  url: `photos/${createUniqNumber()}.jpg`,
+  description: getRandomArrayElement(DESCRIPTIONS_PHOTOS),
+  likes: getRandomPositiveInteger(15, 200),
+  comments: allComments(),
+});
 
-function allPhotos() {
-  return Array.from({length: 25}, createPhotoDiscription);
-}
+const allPhotos = () => Array.from({length: 25}, createPhotoDiscription);
 
 export {allPhotos};
