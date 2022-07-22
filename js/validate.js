@@ -15,6 +15,7 @@ const hideForm = () => {
   uploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onImgUploadEscKeydown);
+  buttomCancel.removeEventListener('click', closeImgUpload);
 };
 
 function onImgUploadEscKeydown(evt) {
