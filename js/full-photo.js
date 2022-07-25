@@ -35,11 +35,11 @@ const pressBtnLoader = (comments) => {
   if (commentsList > commentsShow) {
     const showing = comments.slice(0, commentsShow);
 
-    // commentsLoader.addEventListener('click', () => {
-    //   for (let i = commentsShow; i <= comments.length; i ++) {
-    //     comments.slice(showing - 1, showing + commentsShow);
-    //   }
-    // });
+    commentsLoader.addEventListener('click', () => {
+      for (let i = 0; i < 5 && i < comments.length; i ++) {
+        comments.slice(showing - 1, showing + commentsShow);
+      }
+    });
   } else {
     socialComCount.classList.add('hidden');
     commentsLoader.classList.add('hidden');
