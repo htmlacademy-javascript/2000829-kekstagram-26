@@ -28,6 +28,24 @@ const makeComment = (comments) => {
   allComments.append(fragmentComments);
 };
 
+const pressBtnLoader = (comments) => {
+  const commentsShow = 5;
+  const commentsList = comments.length;
+
+  if (commentsList > commentsShow) {
+    const showing = comments.slice(0, commentsShow);
+
+    // commentsLoader.addEventListener('click', () => {
+    //   for (let i = commentsShow; i <= comments.length; i ++) {
+    //     comments.slice(showing - 1, showing + commentsShow);
+    //   }
+    // });
+  } else {
+    socialComCount.classList.add('hidden');
+    commentsLoader.classList.add('hidden');
+  }
+};
+
 const hideBigPhoto = () => {
   body.classList.remove('modal-open');
   bigPhoto.classList.add('hidden');
@@ -46,14 +64,13 @@ const onBigPhotoEscKeydown = (evt) => {
 const openBigPhoto = (miniPhoto) => {
   body.classList.add('modal-open');
   bigPhoto.classList.remove('hidden');
-  socialComCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
   const currentElement = photos.find((item) => item.id === Number(miniPhoto.dataset.id));
   bigPhotoImg.src = currentElement.url;
   photoDescription.textContent = currentElement.description;
   photoLikes.textContent = currentElement.likes;
   commentsCount.textContent = currentElement.comments.length;
   makeComment(currentElement.comments);
+  pressBtnLoader(currentElement.comments);
   document.addEventListener('keydown', onBigPhotoEscKeydown);
 };
 
