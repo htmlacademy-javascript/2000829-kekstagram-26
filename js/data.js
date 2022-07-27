@@ -49,7 +49,7 @@ function createComment() {
   };
 }
 
-const allComments = () => Array.from({length: getRandomPositiveInteger(1, 4)}, createComment);
+const allComments = () => Array.from({length: getRandomPositiveInteger(1, 20)}, createComment);
 
 const createPhotoDiscription = () => ({
   id: createUniqNumber(),
