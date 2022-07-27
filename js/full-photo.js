@@ -17,7 +17,7 @@ const socialComment = bigPhoto.querySelector('.social__comment');
 let countAllCommentsShow = 0;
 
 const makeComment = (comments) => {
-  //debugger;
+
   const fragmentComments = document.createDocumentFragment();
   comments.forEach(({avatar, name, message}) => {
     const newComment = socialComment.cloneNode(true);
@@ -29,8 +29,8 @@ const makeComment = (comments) => {
 
   allComments.append(fragmentComments);
 };
-//функция показа следующих комментариев
-function changeSliceComments (comments) {
+
+const changeSliceComments = (comments) => {
 
   countAllCommentsShow += NUMBER_COMMENTS_SHOW;
   makeComment(comments.slice(countAllCommentsShow, countAllCommentsShow + NUMBER_COMMENTS_SHOW));
@@ -41,7 +41,7 @@ function changeSliceComments (comments) {
   } else {
     socialComCount.textContent = `${countAllCommentsShow} из ${comments.length} комментариев`;
   }
-}
+};
 
 const pressBtnLoader = (comments) => {
   const commentsList = comments.length;
@@ -57,7 +57,6 @@ const pressBtnLoader = (comments) => {
     commentsLoader.classList.add('hidden');
   }
 };
-
 
 const hideBigPhoto = () => {
   body.classList.remove('modal-open');
