@@ -1,6 +1,7 @@
 import {photos} from './photo.js';
 import { isEscapeKey } from './util.js';
 
+const NUMBER_COMMENTS_SHOW = 5;
 const body = document.querySelector('body');
 const bigPhoto = document.querySelector('.big-picture');
 const bigPhotoImg = bigPhoto.querySelector('.big-picture__img img');
@@ -29,19 +30,20 @@ const makeComment = (comments) => {
 };
 
 const pressBtnLoader = (comments) => {
-  const commentsShow = 5;
   const commentsList = comments.length;
 
-  if (commentsList > commentsShow) {
-    const showing = comments.slice(0, commentsShow);
+  if (commentsList > NUMBER_COMMENTS_SHOW) {
+    makeComment(comments.slice(0, NUMBER_COMMENTS_SHOW));
 
     commentsLoader.addEventListener('click', () => {
-      for (let i = 0; i < 5 && i < comments.length; i ++) {
-        comments.slice(showing - 1, showing + commentsShow);
+      for (let i = 5; i < comments.length; i += 5) {
+
+        makeComment(comments.slice(i, i + NUMBER_COMMENTS_SHOW));
       }
     });
   } else {
-    socialComCount.classList.add('hidden');
+    makeComment(comments);
+    socialComCount.textContent = commentsList;
     commentsLoader.classList.add('hidden');
   }
 };
@@ -69,7 +71,6 @@ const openBigPhoto = (miniPhoto) => {
   photoDescription.textContent = currentElement.description;
   photoLikes.textContent = currentElement.likes;
   commentsCount.textContent = currentElement.comments.length;
-  makeComment(currentElement.comments);
   pressBtnLoader(currentElement.comments);
   document.addEventListener('keydown', onBigPhotoEscKeydown);
 };
