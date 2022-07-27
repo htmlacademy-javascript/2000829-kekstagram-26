@@ -28,25 +28,30 @@ const makeComment = (comments) => {
 
   allComments.append(fragmentComments);
 };
+//функция показа следующих комментариев
+function changeSliceComments (comments) {
+  let countAllCommentsShow = NUMBER_COMMENTS_SHOW;
+  countAllCommentsShow += NUMBER_COMMENTS_SHOW;
+  makeComment(comments.slice(countAllCommentsShow, countAllCommentsShow + NUMBER_COMMENTS_SHOW));
+  //изменение '5' в socialComCount
+
+  //создание if ('' === comments.length) {removeEventListener}
+}
 
 const pressBtnLoader = (comments) => {
   const commentsList = comments.length;
 
   if (commentsList > NUMBER_COMMENTS_SHOW) {
     makeComment(comments.slice(0, NUMBER_COMMENTS_SHOW));
+    commentsLoader.addEventListener('click', changeSliceComments); //создание функции показания следующего slice
 
-    commentsLoader.addEventListener('click', () => {
-      for (let i = 5; i < comments.length; i += 5) {
-
-        makeComment(comments.slice(i, i + NUMBER_COMMENTS_SHOW));
-      }
-    });
   } else {
     makeComment(comments);
     socialComCount.textContent = commentsList;
     commentsLoader.classList.add('hidden');
   }
 };
+
 
 const hideBigPhoto = () => {
   body.classList.remove('modal-open');
