@@ -13,9 +13,11 @@ const socialComCount = bigPhoto.querySelector('.social__comment-count');
 const commentsLoader = bigPhoto.querySelector('.comments-loader');
 const photoContainer = document.querySelector('.pictures');
 const closePhotoButton = bigPhoto.querySelector('.cancel');
+const socialComment = bigPhoto.querySelector('.social__comment');
+let countAllCommentsShow = 0;
 
 const makeComment = (comments) => {
-  const socialComment = bigPhoto.querySelector('.social__comment');
+  //debugger;
   const fragmentComments = document.createDocumentFragment();
   comments.forEach(({avatar, name, message}) => {
     const newComment = socialComment.cloneNode(true);
@@ -24,18 +26,21 @@ const makeComment = (comments) => {
     newComment.querySelector('.social__text').textContent = message;
     fragmentComments.appendChild(newComment);
   });
-  allComments.innerHTML = '';
 
   allComments.append(fragmentComments);
 };
 //функция показа следующих комментариев
 function changeSliceComments (comments) {
-  let countAllCommentsShow = NUMBER_COMMENTS_SHOW;
+
   countAllCommentsShow += NUMBER_COMMENTS_SHOW;
   makeComment(comments.slice(countAllCommentsShow, countAllCommentsShow + NUMBER_COMMENTS_SHOW));
-  //изменение '5' в socialComCount
 
-  //создание if ('' === comments.length) {removeEventListener}
+  if(countAllCommentsShow >= comments.length) {
+    socialComCount.textContent = `${comments.length} из ${comments.length} комментариев`;
+    commentsLoader.classList.add('hidden');
+  } else {
+    socialComCount.textContent = `${countAllCommentsShow} из ${comments.length} комментариев`;
+  }
 }
 
 const pressBtnLoader = (comments) => {
@@ -43,11 +48,12 @@ const pressBtnLoader = (comments) => {
 
   if (commentsList > NUMBER_COMMENTS_SHOW) {
     makeComment(comments.slice(0, NUMBER_COMMENTS_SHOW));
-    commentsLoader.addEventListener('click', changeSliceComments); //создание функции показания следующего slice
-
+    commentsLoader.addEventListener('click', () => {
+      changeSliceComments(comments);
+    });
   } else {
     makeComment(comments);
-    socialComCount.textContent = commentsList;
+    socialComCount.textContent = `${commentsList} из ${commentsList} комментариев`;
     commentsLoader.classList.add('hidden');
   }
 };
@@ -76,6 +82,7 @@ const openBigPhoto = (miniPhoto) => {
   photoDescription.textContent = currentElement.description;
   photoLikes.textContent = currentElement.likes;
   commentsCount.textContent = currentElement.comments.length;
+  allComments.innerHTML = '';
   pressBtnLoader(currentElement.comments);
   document.addEventListener('keydown', onBigPhotoEscKeydown);
 };
