@@ -16,7 +16,7 @@ const closePhotoButton = bigPhoto.querySelector('.cancel');
 const socialComment = bigPhoto.querySelector('.social__comment');
 let countAllCommentsShow = 0;
 
-const makeComment = (comments) => {
+const makeComments = (comments, totalNumberComments) => {
 
   const fragmentComments = document.createDocumentFragment();
   comments.forEach(({avatar, name, message}) => {
@@ -25,37 +25,39 @@ const makeComment = (comments) => {
     newComment.querySelector('.social__picture').alt = name;
     newComment.querySelector('.social__text').textContent = message;
     fragmentComments.appendChild(newComment);
+    countAllCommentsShow++;
   });
 
   allComments.append(fragmentComments);
+  socialComCount.textContent = `${countAllCommentsShow} из ${totalNumberComments} комментариев`;
 };
 
-const changeSliceComments = (comments) => {
-
-  countAllCommentsShow += NUMBER_COMMENTS_SHOW;
-  makeComment(comments.slice(countAllCommentsShow, countAllCommentsShow + NUMBER_COMMENTS_SHOW));
-
-  if(countAllCommentsShow >= comments.length) {
-    socialComCount.textContent = `${comments.length} из ${comments.length} комментариев`;
-    commentsLoader.classList.add('hidden');
-  } else {
-    socialComCount.textContent = `${countAllCommentsShow} из ${comments.length} комментариев`;
-  }
+const clearComments = () => {
+  allComments.innerHTML = '';
 };
 
-const pressBtnLoader = (comments) => {
-  const commentsList = comments.length;
+const createComments = (comments) => {
+  const commentsArrayCopy = comments.slice();
+  const allCommentsCount = comments.length;
 
-  if (commentsList > NUMBER_COMMENTS_SHOW) {
-    makeComment(comments.slice(0, NUMBER_COMMENTS_SHOW));
-    commentsLoader.addEventListener('click', () => {
-      changeSliceComments(comments);
-    });
-  } else {
-    makeComment(comments);
-    socialComCount.textContent = `${commentsList} из ${commentsList} комментариев`;
+  if (allCommentsCount <= NUMBER_COMMENTS_SHOW) {
+    makeComments(commentsArrayCopy, allCommentsCount);
     commentsLoader.classList.add('hidden');
+    return;
   }
+
+  const makeRemainingComments = () => {
+    makeComments(commentsArrayCopy.splice(0, NUMBER_COMMENTS_SHOW), allCommentsCount);
+
+    if (commentsArrayCopy.length === 0) {
+      commentsLoader.classList.add('hidden');
+      commentsLoader.removeEventListener('click', makeRemainingComments); // убираем обработчик на кнопку загрузки комментариев
+    }
+  };
+
+  makeComments(commentsArrayCopy.splice(0, NUMBER_COMMENTS_SHOW), allCommentsCount);
+  commentsLoader.classList.remove('hidden');
+  commentsLoader.addEventListener('click', makeRemainingComments); // добавляем обработчик на кнопку загрузки комментариев
 };
 
 const hideBigPhoto = () => {
@@ -81,8 +83,9 @@ const openBigPhoto = (miniPhoto) => {
   photoDescription.textContent = currentElement.description;
   photoLikes.textContent = currentElement.likes;
   commentsCount.textContent = currentElement.comments.length;
-  allComments.innerHTML = '';
-  pressBtnLoader(currentElement.comments);
+  clearComments();
+  countAllCommentsShow = 0;
+  createComments(currentElement.comments);
   document.addEventListener('keydown', onBigPhotoEscKeydown);
 };
 
